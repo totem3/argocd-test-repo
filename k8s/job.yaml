@@ -12,6 +12,8 @@ metadata:
     argocd.argoproj.io/hook: PreSync
     # 完了後に削除
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    # sync policy
+    argocd.argoproj.io/sync-policy: ApplyOutOfSyncOnly=true
 
 spec:
   # 適当な文字列を出力する
