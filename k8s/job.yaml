@@ -5,7 +5,7 @@ apiVersion: batch/v1
 metadata:
   name: job
   namespace: argocd-test-nc
-  labels:
+  annotations:
     # 10より前に実行する
     argocd.argoproj.io/sync-wave: "9"
     # presync
