@@ -9,7 +9,7 @@ metadata:
     # 10より前に実行する
     argocd.argoproj.io/sync-wave: "9"
     # sync policy
-    argocd.argoproj.io/sync-options: ApplyOutOfSyncOnly=true
+    argocd.argoproj.io/sync-options: Replace=true,ApplyOutOfSyncOnly=true
 spec:
   # 適当な文字列を出力する
   template:
