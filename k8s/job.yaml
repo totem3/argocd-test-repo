@@ -8,13 +8,8 @@ metadata:
   annotations:
     # 10より前に実行する
     argocd.argoproj.io/sync-wave: "9"
-    # presync
-    argocd.argoproj.io/hook: PreSync
-    # 完了後に削除
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     # sync policy
     argocd.argoproj.io/sync-options: ApplyOutOfSyncOnly=true
-
 spec:
   # 適当な文字列を出力する
   template:
