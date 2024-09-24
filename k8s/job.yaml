@@ -17,5 +17,5 @@ spec:
       containers:
         - name: job
           image: busybox
-          command: ["echo", "job"]
+          command: ["echo", "job2"]
       restartPolicy: Never
