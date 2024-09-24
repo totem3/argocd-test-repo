@@ -10,6 +10,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "9"
     # sync policy
     argocd.argoproj.io/sync-options: Replace=true,ApplyOutOfSyncOnly=true
+  labels:
+    app: job
 spec:
   # 適当な文字列を出力する
   template:
