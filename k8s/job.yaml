@@ -19,3 +19,4 @@ spec:
           image: busybox
           command: ["echo", "job2"]
       restartPolicy: Never
+  ttlSecondsAfterFinished: 10
