@@ -50,4 +50,7 @@ data:
         location / {
             proxy_pass http://nginx;
         }
+        location /a {
+            proxy_pass http://nginx;
+        }
     }
