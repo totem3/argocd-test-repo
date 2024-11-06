@@ -9,7 +9,7 @@ metadata:
     # 10より前に実行する
     argocd.argoproj.io/sync-wave: "9"
     # sync policy
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
   labels:
     app: job
 spec:
