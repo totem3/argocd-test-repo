@@ -6,8 +6,7 @@ metadata:
   name: job
   namespace: argocd-test-nc
   annotations:
-    # 10より前に実行する
-    argocd.argoproj.io/sync-wave: "9"
+    argocd.argoproj.io/hook: "PreSync"
     # sync policy
     argocd.argoproj.io/sync-options: Force=true,Replace=true
   labels:
