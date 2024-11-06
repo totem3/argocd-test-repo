@@ -14,7 +14,7 @@ spec:
       containers:
       - name: change-detector
         image: busybox
-        command: ["/bin/bash"]
+        command: ["/bin/sh"]
         args:
           - "-c"
           - |
