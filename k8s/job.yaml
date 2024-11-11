@@ -19,7 +19,7 @@ spec:
          - "-c"
          - |
            sleep 5
-           echo "hello"
+           echo "hello world"
       restartPolicy: Never
 
 # nginxのsync前に実行されるジョブ
