@@ -1,5 +1,27 @@
 # nginxのsync前に実行されるジョブ
 ---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: directory-change-check
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  template:
+    spec:
+      containers:
+      - name: change-detector
+        image: busybox
+        command: ["/bin/sh"]
+        args:
+         - "-c"
+          - |
+            sleep 5
+            echo "hello"
+
+# nginxのsync前に実行されるジョブ
 ---
 apiVersion: batch/v1
 kind: Job
@@ -8,6 +30,7 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   template:
     spec:
@@ -18,69 +41,8 @@ spec:
         args:
           - "-c"
           - |
-            # Define the directory to monitor
-            # TARGET_DIR="/home"
-            CHECKSUM_FILE="/tmp/previous_checksums"
+            sleep 5
+            echo "hello"
             
-            # Function to calculate directory checksum
-            calculate_checksums() {
-              if [ -d "$TARGET_DIR" ]; then
-                find "$TARGET_DIR" -type f -exec sha256sum {} \; | sort
-              else
-                echo "Directory $TARGET_DIR does not exist"
-                exit 1
-              fi
-            }
-            
-            # Get current checksums
-            CURRENT_CHECKSUMS=$(calculate_checksums)
-            
-            # Check if previous checksum exists in ConfigMap
-            if [ -f "$CHECKSUM_FILE" ]; then
-              PREVIOUS_CHECKSUMS=$(cat "$CHECKSUM_FILE")
-              
-              # Compare checksums
-              if [ "$CURRENT_CHECKSUMS" = "$PREVIOUS_CHECKSUMS" ]; then
-                echo "No changes detected in $TARGET_DIR"
-                exit 0
-              fi
-            fi
-            
-            # Store new checksums
-            echo "$CURRENT_CHECKSUMS" > "$CHECKSUM_FILE"
-            
-            echo "Changes detected in $TARGET_DIR"
-            echo "Proceeding with deployment..."
-            
-            # Your deployment logic here
-            # For example:
-            # 1. Run database migrations
-            # 2. Update cache
-            # 3. Perform any necessary data transformations
-            
-            # Example deployment command:
-            # ./deploy-updates.sh
-            
-        volumeMounts:
-        - name: checksum-storage
-          mountPath: /tmp
-        env:
-        - name: TARGET_DIR
-          value: "/home"
-      volumes:
-      - name: checksum-storage
-        persistentVolumeClaim:
-          claimName: checksum-pvc
       restartPolicy: Never
   backoffLimit: 2
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: checksum-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Mi
