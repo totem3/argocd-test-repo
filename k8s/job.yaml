@@ -17,9 +17,9 @@ spec:
         command: ["/bin/sh"]
         args:
          - "-c"
-          - |
-            sleep 5
-            echo "hello"
+         - |
+           sleep 5
+           echo "hello"
 
 # nginxのsync前に実行されるジョブ
 ---
