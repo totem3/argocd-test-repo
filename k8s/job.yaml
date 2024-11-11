@@ -20,6 +20,7 @@ spec:
          - |
            sleep 5
            echo "hello"
+      restartPolicy: Never
 
 # nginxのsync前に実行されるジョブ
 ---
@@ -43,6 +44,5 @@ spec:
           - |
             sleep 5
             echo "hello"
-            
       restartPolicy: Never
   backoffLimit: 2
