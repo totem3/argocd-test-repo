@@ -1,0 +1,61 @@
+# nginxで適当なアプリケーションをホストする設定ファイル
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nginx
+  namespace: argocd-test-nc
+  labels:
+    app: nginx
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.19.6
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: common-cm
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+  namespace: argocd-test-nc
+  labels:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-config
+  namespace: argocd-test-nc
+  labels:
+    argocd.argoproj.io/sync-wave: "10"
+data:
+  nginx.conf: |
+    server {
+        listen 80;
+        server_name nginx.argocd-test-nc.example.com;
+        location / {
+            proxy_pass http://nginx;
+        }
+    }
