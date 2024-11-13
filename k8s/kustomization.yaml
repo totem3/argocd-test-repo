@@ -7,6 +7,7 @@ namespace: argocd-test-nc
 resources:
   - nginx.yaml
   - job.yaml
+  - nginx2.yaml
 
 configMapGenerator:
 - name: common-cm
