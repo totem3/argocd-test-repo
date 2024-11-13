@@ -7,3 +7,9 @@ namespace: argocd-test-nc
 resources:
   - nginx.yaml
   - job.yaml
+
+configMapGenerator:
+- name: common-cm
+  envs:
+  - configs/common.env
+
