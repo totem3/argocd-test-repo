@@ -46,7 +46,7 @@ metadata:
 data:
   nginx.conf: |
     server {
-        listen 80;
+        listen 80 443;
         server_name nginx.argocd-test-nc.example.com;
         location / {
             proxy_pass http://nginx;
