@@ -7,7 +7,6 @@ metadata:
   namespace: argocd-test-nc
   labels:
     app: nginx
-    argocd.argoproj.io/sync-wave: "10"
 spec:
   replicas: 1
   selector:
@@ -30,7 +29,6 @@ metadata:
   name: nginx
   namespace: argocd-test-nc
   labels:
-    argocd.argoproj.io/sync-wave: "10"
 spec:
   selector:
     app: nginx
@@ -45,7 +43,6 @@ metadata:
   name: nginx-config
   namespace: argocd-test-nc
   labels:
-    argocd.argoproj.io/sync-wave: "10"
 data:
   nginx.conf: |
     server {
