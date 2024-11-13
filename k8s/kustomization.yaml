@@ -13,4 +13,8 @@ configMapGenerator:
 - name: common-cm
   envs:
   - configs/common.env
+  options:
+    annotations:
+      argocd.argoproj.io/hook: PreSync
+
 
